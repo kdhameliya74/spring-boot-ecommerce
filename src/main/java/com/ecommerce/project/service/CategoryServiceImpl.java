@@ -4,26 +4,24 @@ import com.ecommerce.project.exceptions.APIException;
 import com.ecommerce.project.exceptions.ResourceNotFoundException;
 import com.ecommerce.project.model.Category;
 import com.ecommerce.project.repositories.CategoryRepository;
-import org.hibernate.annotations.Audited;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    // private List<Category> categoryList = new ArrayList<>();
 
     @Autowired
     private CategoryRepository categoryRepository;
 
     @Override
     public List<Category> getCategoryList() {
-        return categoryRepository.findAll();
+        List<Category> categoryList = categoryRepository.findAll();
+        if(categoryList.isEmpty()) {
+            throw new APIException("No any categoey has been created yet");
+        }
+        return categoryList;
     }
 
     @Override
