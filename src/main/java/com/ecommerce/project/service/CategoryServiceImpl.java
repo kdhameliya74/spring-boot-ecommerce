@@ -1,9 +1,12 @@
 package com.ecommerce.project.service;
 
+import com.ecommerce.project.dto.category.request.CategoryCreateRequest;
+import com.ecommerce.project.dto.category.response.CategoryResponse;
 import com.ecommerce.project.exceptions.APIException;
 import com.ecommerce.project.exceptions.ResourceNotFoundException;
 import com.ecommerce.project.model.Category;
 import com.ecommerce.project.repositories.CategoryRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +18,20 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
-    public List<Category> getCategoryList() {
+    public CategoryResponse getCategoryList() {
         List<Category> categoryList = categoryRepository.findAll();
         if(categoryList.isEmpty()) {
-            throw new APIException("No any categoey has been created yet");
+            throw new APIException("No any category has been created yet");
         }
-        return categoryList;
+        List<CategoryCreateRequest> categoryCreateRequests = categoryList.stream().map(category -> modelMapper.map(category, CategoryCreateRequest.class)).toList();
+
+        CategoryResponse categoryResponse = new CategoryResponse();
+        categoryResponse.setContent(categoryCreateRequests);
+        return categoryResponse;
     }
 
     @Override

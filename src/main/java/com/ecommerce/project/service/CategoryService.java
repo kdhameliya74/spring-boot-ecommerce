@@ -1,11 +1,12 @@
 package com.ecommerce.project.service;
 
+import com.ecommerce.project.dto.category.response.CategoryResponse;
 import com.ecommerce.project.model.Category;
 
 import java.util.List;
 
 public interface CategoryService {
-    List<Category> getCategoryList();
+    CategoryResponse getCategoryList();
 
     String createCategory(Category category);
 
