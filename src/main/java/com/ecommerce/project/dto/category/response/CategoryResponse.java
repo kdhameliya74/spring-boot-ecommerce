@@ -1,6 +1,6 @@
 package com.ecommerce.project.dto.category.response;
 
-import com.ecommerce.project.dto.category.request.CategoryCreateRequest;
+import com.ecommerce.project.dto.category.request.CategoryDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryResponse {
-    List<CategoryCreateRequest> content;
+    List<CategoryDTO> content;
 }
